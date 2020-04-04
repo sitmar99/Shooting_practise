@@ -7,7 +7,7 @@ void crosshair::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void crosshair::update()
 {
-
+	std::cout << "fsdfsf";
 	this->getSprite()->setPosition(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
 }
 
