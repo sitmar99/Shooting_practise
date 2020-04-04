@@ -8,7 +8,7 @@ void crosshair::draw(sf::RenderTarget& target, sf::RenderStates states) const
 void crosshair::update()
 {
 
-	this->getSprite()->setPosition(sf::Mouse::getPosition().x, 0);
+	this->getSprite()->setPosition(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
 }
 
 crosshair::crosshair()
