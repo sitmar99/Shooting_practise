@@ -16,7 +16,7 @@ crosshair::crosshair()
 	sf::Sprite *s = this->getSprite();
 	t->loadFromFile("sprites/crosshair.png");
 	s->setTexture(*t);
-	s->setPosition(200,200);
+	s->setPosition(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
 }
 
 crosshair::~crosshair()

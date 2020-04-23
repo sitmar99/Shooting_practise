@@ -6,16 +6,29 @@ int main()
 {
     crosshair *ch = new crosshair();
 
-    sf::RenderWindow window(sf::VideoMode(600, 600), "!shooting practice!");
+    sf::RenderWindow window(sf::VideoMode(), "!shooting practice!", sf::Style::Fullscreen);
 
     while (window.isOpen())
     {
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
-                window.close();
-
+            switch(event.type)
+            {
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+                case sf::Event::KeyPressed:
+                {
+                    switch (event.key.code)
+                    {
+                    case sf::Keyboard::Escape:
+                        window.close();
+                        break;
+                    }
+                }
+            }
+            
             ch->update();
         }
 
