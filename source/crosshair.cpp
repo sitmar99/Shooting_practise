@@ -2,7 +2,7 @@
 
 void Crosshair::update()
 {
-	this->getSprite()->setPosition(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
+	this->getSprite()->setPosition(sf::Vector2f(sf::Mouse::getPosition()));
 }
 
 Crosshair::Crosshair(std::string spritePath, double nSize, int oSize) : Entity(spritePath, nSize, oSize)
