@@ -50,7 +50,8 @@ int main()
         }
 
         window.clear(sf::Color::White);
-        window.draw(*entities[0]);
+        for (auto ent : entities)
+            window.draw(*ent);
         window.display();
     }
 

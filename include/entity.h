@@ -5,6 +5,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+
 #include <string>
 
 class Entity: public sf::Sprite
