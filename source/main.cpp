@@ -4,7 +4,7 @@
 
 int main()
 {
-    crosshair *ch = new crosshair();
+    Crosshair *ch = new Crosshair("sprites/crosshair.png", 50.0, 512);
 
     sf::RenderWindow window(sf::VideoMode(), "!shooting practice!", sf::Style::Fullscreen);
     window.setMouseCursorVisible(false);

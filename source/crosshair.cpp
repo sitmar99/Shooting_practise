@@ -1,27 +1,13 @@
 #include "crosshair.h"
 
-void crosshair::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	target.draw(this->sprite, states);
-}
-
-void crosshair::update()
+void Crosshair::update()
 {
 	this->getSprite()->setPosition(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
 }
 
-crosshair::crosshair()
+Crosshair::Crosshair(std::string spritePath, double nSize, int oSize) : Entity(spritePath, nSize, oSize)
 {
-	sf::Texture *t = this->getTexture();
-	sf::Sprite *s = this->getSprite();
-	t->loadFromFile("sprites/crosshair.png");
-	s->setTexture(*t);
-	s->setPosition(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
-	s->setScale(50.0/512, 50.0/512);
-	s->setOrigin(256,256);
+	this->getSprite()->setOrigin(256,256);
 }
 
-crosshair::~crosshair()
-{
-
-}
+Crosshair::~Crosshair() {}
