@@ -1,13 +1,20 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+
+#include <vector>
+#include <memory>
+
+#include "entity.h"
 #include "crosshair.h"
 
 int main()
 {
-    Crosshair *ch = new Crosshair("sprites/crosshair.png", 50.0, 512);
+    std::vector<std::shared_ptr<Entity>> entities;
+    entities.push_back(std::make_shared<Crosshair>("sprites/crosshair.png", 50.0, 512));
 
     sf::RenderWindow window(sf::VideoMode(), "!shooting practice!", sf::Style::Fullscreen);
     window.setMouseCursorVisible(false);
+    window.setFramerateLimit(60);
 
 
     while (window.isOpen())
@@ -31,11 +38,11 @@ int main()
                 }
             }
             
-            ch->update();
+            entities[0] -> update();
         }
 
         window.clear(sf::Color::White);
-        window.draw(*ch);
+        window.draw(*entities[0]);
         window.display();
     }
 
