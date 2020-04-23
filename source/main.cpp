@@ -7,6 +7,8 @@ int main()
     crosshair *ch = new crosshair();
 
     sf::RenderWindow window(sf::VideoMode(), "!shooting practice!", sf::Style::Fullscreen);
+    window.setMouseCursorVisible(false);
+
 
     while (window.isOpen())
     {
