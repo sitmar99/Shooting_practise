@@ -7,6 +7,14 @@
 #include "entity.h"
 #include "crosshair.h"
 
+void update(std::vector<std::shared_ptr<Entity>> entities)
+{
+    for (auto ent : entities)
+    {
+        ent -> update();
+    }
+}
+
 int main()
 {
     std::vector<std::shared_ptr<Entity>> entities;
@@ -37,8 +45,8 @@ int main()
                     }
                 }
             }
-            
-            entities[0] -> update();
+
+            update(entities);
         }
 
         window.clear(sf::Color::White);
