@@ -2,7 +2,6 @@
 
 void Target::update()
 {
-    this->getSprite()->setPosition(0,0);
     if (this->getSprite()->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
         this->getSprite()->setRotation(90);
     else
@@ -12,7 +11,7 @@ void Target::update()
 
 Target::Target(std::string spritePath, double nSize, int oSize) : Entity(spritePath, nSize, oSize)
 {
-    this->getSprite()->setOrigin(nSize/2, nSize/2);
+    this->getSprite()->setOrigin(oSize/2, oSize/2);
 }
 
 Target::~Target() {}
