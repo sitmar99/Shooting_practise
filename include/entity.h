@@ -29,6 +29,7 @@ public:
 
     //Konstruktory i destruktory
     Entity(std::string spritePath, double nSize, int oSize);
+    Entity(sf::Vector2f pos, std::string spritePath, double nSize, int oSize);
     ~Entity();
 };
 

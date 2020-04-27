@@ -3,13 +3,13 @@
 void Target::update()
 {
     if (this->getSprite()->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
-        this->getSprite()->setRotation(90);
+        aimed = true;
     else
-        this->getSprite()->setRotation(0);
+        aimed = false;
         
 }
 
-Target::Target(std::string spritePath, double nSize, int oSize) : Entity(spritePath, nSize, oSize)
+Target::Target(sf::Vector2f pos, std::string spritePath, double nSize, int oSize) : Entity(pos, spritePath, nSize, oSize)
 {
     this->getSprite()->setOrigin(oSize/2, oSize/2);
 }

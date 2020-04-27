@@ -14,4 +14,14 @@ Entity::Entity(std::string spritePath, double nSize, int oSize)
 	s->setScale(nSize/oSize, nSize/oSize);
 }
 
+Entity::Entity(sf::Vector2f pos, std::string spritePath, double nSize, int oSize)
+{
+	sf::Texture *t = this->getTexture();
+	sf::Sprite *s = this->getSprite();
+	t->loadFromFile(spritePath);
+	s->setTexture(*t);
+	s->setScale(nSize/oSize, nSize/oSize);
+	s->setPosition(pos);
+}
+
 Entity::~Entity() {}

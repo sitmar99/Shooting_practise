@@ -6,11 +6,14 @@
 class Target: public Entity
 {
 private:
+    bool aimed;
 
 public:
+    bool getAimed() { return aimed; }
+
     void update();
 
-    Target(std::string spritePath, double nSize, int oSize);
+    Target(sf::Vector2f pos, std::string spritePath, double nSize, int oSize);
     ~Target();
 };
 
