@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <memory>
+#include <iostream>
 
 #include "entity.h"
 #include "crosshair.h"
@@ -19,7 +20,7 @@ void update(std::vector<std::shared_ptr<Entity>> entities)
 int main()
 {
     std::vector<std::shared_ptr<Entity>> entities;
-    entities.push_back(std::make_shared<Target>("sprites/target.jpeg", 250.0, 800));
+    entities.push_back(std::make_shared<Target>(sf::Vector2f(200,200),"sprites/target.jpeg", 250.0, 800));
     entities.push_back(std::make_shared<Crosshair>("sprites/crosshair.png", 50.0, 512));
 
 
@@ -47,6 +48,10 @@ int main()
                         break;
                     }
                 }
+                case sf::Event::MouseButtonPressed:
+                    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                        std::cout << "strzel!" << std::endl;
+                    break;
             }
 
             update(entities);
