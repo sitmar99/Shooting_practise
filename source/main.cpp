@@ -24,7 +24,7 @@ int main()
 
 
     sf::RenderWindow window(sf::VideoMode(), "!shooting practice!", sf::Style::Fullscreen);
-    window.setMouseCursorVisible(false);
+    // window.setMouseCursorVisible(false);
     window.setFramerateLimit(60);
 
 

@@ -2,6 +2,7 @@
 
 void Target::update()
 {
+    this->getSprite()->setPosition(0,0);
     if (this->getSprite()->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
         this->getSprite()->setRotation(90);
     else

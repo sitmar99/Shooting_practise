@@ -11,7 +11,6 @@ Entity::Entity(std::string spritePath, double nSize, int oSize)
 	sf::Sprite *s = this->getSprite();
 	t->loadFromFile(spritePath);
 	s->setTexture(*t);
-	s->setPosition(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
 	s->setScale(nSize/oSize, nSize/oSize);
 }
 
