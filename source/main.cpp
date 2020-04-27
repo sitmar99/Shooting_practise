@@ -6,6 +6,7 @@
 
 #include "entity.h"
 #include "crosshair.h"
+#include "target.h"
 
 void update(std::vector<std::shared_ptr<Entity>> entities)
 {
@@ -18,7 +19,9 @@ void update(std::vector<std::shared_ptr<Entity>> entities)
 int main()
 {
     std::vector<std::shared_ptr<Entity>> entities;
+    entities.push_back(std::make_shared<Target>("sprites/target.jpeg", 250.0, 800));
     entities.push_back(std::make_shared<Crosshair>("sprites/crosshair.png", 50.0, 512));
+
 
     sf::RenderWindow window(sf::VideoMode(), "!shooting practice!", sf::Style::Fullscreen);
     window.setMouseCursorVisible(false);

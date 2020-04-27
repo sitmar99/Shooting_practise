@@ -8,6 +8,8 @@ class Target: public Entity
 private:
 
 public:
+    void update();
+
     Target(std::string spritePath, double nSize, int oSize);
     ~Target();
 };
