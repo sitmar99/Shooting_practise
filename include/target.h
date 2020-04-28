@@ -6,6 +6,7 @@
 class Target: public Entity
 {
 private:
+    int points;
     bool aimed;
 
 public:
