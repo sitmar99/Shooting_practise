@@ -2,6 +2,7 @@
 #define TARGET_H
 
 #include "entity.h"
+#include <iostream>
 
 class Target: public Entity
 {
@@ -10,7 +11,8 @@ private:
     bool aimed;
 
 public:
-    bool getAimed() { return aimed; }
+    int getPoints() { return this->points; }
+    bool getAimed() { return this->aimed; }
 
     void update();
 

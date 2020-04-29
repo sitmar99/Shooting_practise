@@ -19,6 +19,8 @@ void update(std::vector<std::shared_ptr<Entity>> entities)
 
 int main()
 {
+    int points = 0;
+
     std::vector<std::shared_ptr<Entity>> entities;
     entities.push_back(std::make_shared<Target>(sf::Vector2f(200,200),"sprites/target.jpeg", 250.0, 800));
     entities.push_back(std::make_shared<Crosshair>("sprites/crosshair.png", 50.0, 512));
@@ -50,10 +52,16 @@ int main()
                 }
                 case sf::Event::MouseButtonPressed:
                     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-                        std::cout << "strzel!" << std::endl;
+                    {
+                        for (auto iter = entities.begin(); iter != entities.end()-1; iter++)
+                        {
+                            if (static_cast<Target*>(iter->get())->getAimed())
+                                points+=static_cast<Target*>(iter->get())->getPoints();
+                        }
+                    }
                     break;
             }
-
+            std::cout << points << std::endl;
             update(entities);
         }
 
