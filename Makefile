@@ -13,5 +13,5 @@ $(EXE):
 	$(CC) $(CFLAGS) $(INCLUDE) $(SOURCE) -o $(EXE) $(SFML)
 
 clean:
-	rm $(EXE)
 	rm *.o
+	rm $(EXE)

@@ -3,6 +3,9 @@
 
 #include <vector>
 #include <memory>
+#include <time.h>
+#include <thread>
+#include <pthread.h>
 #include <iostream>
 
 #include "entity.h"
@@ -19,7 +22,7 @@ void update(std::vector<std::shared_ptr<Entity>> entities)
 
 int main()
 {
-    int points = 0;
+    int points = 0;    
 
     std::vector<std::shared_ptr<Entity>> entities;
     entities.push_back(std::make_shared<Target>(sf::Vector2f(200,200),"sprites/target.jpeg", 250.0, 800));
@@ -49,19 +52,28 @@ int main()
                         window.close();
                         break;
                     }
+                    case sf::Keyboard::R:
+                        static_cast<Crosshair*>(entities.back().get())->reload();
+                        break;
                 }
                 case sf::Event::MouseButtonPressed:
                     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                     {
-                        for (auto iter = entities.begin(); iter != entities.end()-1; iter++)
-                        {
-                            if (static_cast<Target*>(iter->get())->getAimed())
-                                points+=static_cast<Target*>(iter->get())->getPoints();
-                        }
+                        Crosshair *ch = static_cast<Crosshair*>(entities.back().get());
+                        if (ch->shootable())
+                            {
+                                std::cout << time(NULL) << std::endl;
+                                ch->setShootedTime(time(NULL));
+                            }
+                        // for (auto iter = entities.begin(); iter != entities.end()-1; iter++)
+                        // {
+                        //     if (static_cast<Target*>(iter->get())->getAimed())
+                        //         points+=static_cast<Target*>(iter->get())->getPoints();
+                        // }
                     }
                     break;
             }
-            std::cout << points << std::endl;
+            // std::cout << points << std::endl;
             update(entities);
         }
 

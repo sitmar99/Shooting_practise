@@ -1,8 +1,30 @@
 #include "crosshair.h"
 
+void Crosshair::reload()
+{
+	std::thread reloadingThred(reloading);
+}
+
+void *Crosshair::reloading()
+{
+	while(bulletsLeft < magazineSize)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(reloadTime / magazineSize));
+		bulletsLeft++;
+		std::cout << "Bullets: " << bulletsLeft << std::endl;
+	}
+}
+
+bool Crosshair::shootable()
+{
+	if (time(NULL) - shootedTime >= shootDelay && bulletsLeft > 0)
+		return true;
+	return false;
+}
+
 void Crosshair::update()
 {
-	this->getSprite()->setPosition(sf::Vector2f(sf::Mouse::getPosition()));
+	getSprite()->setPosition(sf::Vector2f(sf::Mouse::getPosition()));
 }
 
 Crosshair::Crosshair(std::string spritePath, double nSize, int oSize) : Entity(spritePath, nSize, oSize)
@@ -10,6 +32,12 @@ Crosshair::Crosshair(std::string spritePath, double nSize, int oSize) : Entity(s
 	sf::Sprite *s = this->getSprite();
 	s->setPosition(sf::Vector2f(sf::Mouse::getPosition()));
 	s->setOrigin(oSize/2,oSize/2);
+
+	magazineSize = 6;
+	bulletsLeft = 6;
+	reloadTime = 4000;	//in millis
+	time(&shootedTime);
+	shootDelay = 1;		//in secs
 }
 
 Crosshair::~Crosshair() {}
