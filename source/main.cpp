@@ -12,6 +12,12 @@
 #include "crosshair.h"
 #include "target.h"
 
+void addTarget(std::vector<std::shared_ptr<Entity>> entities)
+{
+    if (rand()%100 < 5)
+    entities.push_back(std::make_shared<Target>(sf::Vector2f(200,200),"sprites/target.jpeg", 250.0, 800));
+}
+
 void update(std::vector<std::shared_ptr<Entity>> entities)
 {
     for (auto ent : entities)
@@ -53,7 +59,7 @@ int main()
                         break;
                     }
                     case sf::Keyboard::R:
-                        static_cast<Crosshair*>(entities.back().get())->reload();
+                        // static_cast<Crosshair*>(entities.back().get())->reload();
                         break;
                 }
                 case sf::Event::MouseButtonPressed:
@@ -62,20 +68,22 @@ int main()
                         Crosshair *ch = static_cast<Crosshair*>(entities.back().get());
                         if (ch->shootable())
                             {
-                                std::cout << time(NULL) << std::endl;
+                                // ch->decBulletsLeft();
+                                // std::cout << ch->getBulletsLeft() << std::endl;
                                 ch->setShootedTime(time(NULL));
                             }
-                        // for (auto iter = entities.begin(); iter != entities.end()-1; iter++)
-                        // {
-                        //     if (static_cast<Target*>(iter->get())->getAimed())
-                        //         points+=static_cast<Target*>(iter->get())->getPoints();
-                        // }
+                        for (auto iter = entities.begin(); iter != entities.end()-1; iter++)
+                        {
+                            if (static_cast<Target*>(iter->get())->getAimed())
+                                points+=static_cast<Target*>(iter->get())->getPoints();
+                        }
                     }
                     break;
             }
-            // std::cout << points << std::endl;
-            update(entities);
         }
+        addTarget(entities);
+        update(entities);
+        std::cout << points << std::endl;
 
         window.clear(sf::Color::White);
         for (auto ent : entities)

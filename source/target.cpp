@@ -2,6 +2,8 @@
 
 void Target::update()
 {
+    getSprite()->setPosition(getSprite()->getPosition() + direction * speed);
+
     if (this->getSprite()->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
         this->aimed = true;
     else
@@ -12,7 +14,12 @@ void Target::update()
 Target::Target(sf::Vector2f pos, std::string spritePath, double nSize, int oSize) : Entity(pos, spritePath, nSize, oSize)
 {
     this->getSprite()->setOrigin(oSize/2, oSize/2);
-    this->points = 10;
+
+    srand(time(NULL));
+    this->direction = sf::Vector2f(rand()%360, rand()&360);
+    this->speed = rand()%3 + 1;
+    this->points = 10 * speed;
+    this->speed *= 0.01;
 }
 
 Target::~Target() {}

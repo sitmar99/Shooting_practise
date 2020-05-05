@@ -18,6 +18,7 @@ private:
 	int shootDelay;		//in secs
 public:
 	int getBulletsLeft() { return bulletsLeft; }
+	void decBulletsLeft() { bulletsLeft--; }
 	void setShootedTime(time_t nShootedTime) { shootedTime = nShootedTime; }
 	time_t getShootedTime() { return shootedTime; }
 	int getShootDelay() { return shootDelay; }

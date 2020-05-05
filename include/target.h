@@ -9,6 +9,8 @@ class Target: public Entity
 private:
     int points;
     bool aimed;
+    sf::Vector2f direction;
+    float speed;
 
 public:
     int getPoints() { return this->points; }

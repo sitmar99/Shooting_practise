@@ -2,7 +2,15 @@
 
 void Crosshair::reload()
 {
-	std::thread reloadingThred(reloading);
+	std::thread reloadingThred([this]{
+	std::cout << "flaming" << std::endl;
+		while(bulletsLeft < magazineSize)
+		{
+		std::this_thread::sleep_for(std::chrono::milliseconds(reloadTime / magazineSize));
+		bulletsLeft++;
+		std::cout << "Bullets: " << bulletsLeft << std::endl;
+		}
+	});
 }
 
 void *Crosshair::reloading()
