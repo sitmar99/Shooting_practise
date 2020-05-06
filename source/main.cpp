@@ -12,28 +12,40 @@
 #include "crosshair.h"
 #include "target.h"
 
-void addTarget(std::vector<std::shared_ptr<Entity>> entities)
+void addTarget(std::vector<std::shared_ptr<Entity>> &entities)
 {
-    if (rand()%100 < 5)
-    entities.push_back(std::make_shared<Target>(sf::Vector2f(200,200),"sprites/target.jpeg", 250.0, 800));
+    if (rand()%1000 < 5)
+    {
+        entities.push_back(std::make_shared<Target>(sf::Vector2f(200,200),"sprites/target.jpeg", 200.0, 800));
+        std::cout << entities.size() << "\n";
+    }
 }
 
-void update(std::vector<std::shared_ptr<Entity>> entities)
+void update(std::vector<std::shared_ptr<Entity>> &entities, int width, int height)
 {
-    for (auto ent : entities)
+    for (auto ent = entities.begin(); ent != entities.end(); ent++)
     {
-        ent -> update();
+        sf::Vector2f pos = (*ent)->getSprite()->getPosition();
+
+        if (pos.x < -200 || pos.x > width + 200 || pos.y < -200 || pos.y > height + 200)
+        {
+            entities.erase(ent--);
+        }
+        else
+            (*ent) -> update();
     }
 }
 
 int main()
 {
-    int points = 0;    
+    srand(time(NULL));
+    int points = 0;
+    int width = sf::VideoMode::getDesktopMode().width;
+    int height = sf::VideoMode::getDesktopMode().height;
 
     std::vector<std::shared_ptr<Entity>> entities;
-    entities.push_back(std::make_shared<Target>(sf::Vector2f(200,200),"sprites/target.jpeg", 250.0, 800));
+    entities.push_back(std::make_shared<Target>(sf::Vector2f(200,200),"sprites/target.jpeg", 200.0, 800));
     entities.push_back(std::make_shared<Crosshair>("sprites/crosshair.png", 50.0, 512));
-
 
     sf::RenderWindow window(sf::VideoMode(), "!shooting practice!", sf::Style::Fullscreen);
     window.setMouseCursorVisible(false);
@@ -82,8 +94,10 @@ int main()
             }
         }
         addTarget(entities);
-        update(entities);
-        std::cout << points << std::endl;
+
+        update(entities, width, height);
+        // std::cout << entities.size() << std::endl;
+        // std::cout << points << std::endl;
 
         window.clear(sf::Color::White);
         for (auto ent : entities)

@@ -22,4 +22,4 @@ Target::Target(sf::Vector2f pos, std::string spritePath, double nSize, int oSize
     this->speed *= 0.01;
 }
 
-Target::~Target() {}
+Target::~Target() { std::cout << "flaming" << std::endl; }

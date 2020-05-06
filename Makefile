@@ -1,5 +1,5 @@
 CC= g++
-CFLAGS= -std=c++11 -Wall -w -O2
+CFLAGS= -std=c++14 -Wall -w -O2
 INCLUDE= -I include/
 SFML= -lsfml-graphics -lsfml-window -lsfml-system
 THREAD= -lpthread
@@ -8,6 +8,8 @@ EXE= Game
 
 all:	$(EXE)
 	./$(EXE)
+	rm *.o
+	rm $(EXE)
 
 $(EXE):	
 	$(CC) -c $(CFLAGS) $(INCLUDE) $(SOURCE)
@@ -16,3 +18,4 @@ $(EXE):
 clean:
 	rm *.o
 	rm $(EXE)
+	clear
