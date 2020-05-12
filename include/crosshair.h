@@ -11,6 +11,8 @@
 class Crosshair: public Entity
 {
 private:
+	std::thread reloadingThread;
+
 	int magazineSize;
 	int bulletsLeft;
 	int reloadTime;		//in millis

@@ -2,7 +2,7 @@
 
 void Target::update()
 {
-    getSprite()->setPosition(getSprite()->getPosition() + direction * speed);
+    getSprite()->move(direction * speed);
 
     if (this->getSprite()->getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
         this->aimed = true;
