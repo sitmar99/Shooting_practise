@@ -3,7 +3,7 @@
 void Crosshair::reload()
 {
 	this->reloadingThread = std::thread([]{return 1;});
-	// this->reloadingThread = move(std::thread([this]{
+	// this->reloadingThread = move(std::thread([this]{ma
 	// std::cout << "flaming" << std::endl;
 	// 	while(bulletsLeft < magazineSize)
 	// 	{
