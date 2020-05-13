@@ -58,7 +58,7 @@ void addTarget(std::deque<std::shared_ptr<Entity>> &entities, int width, int hei
     }
 }
 
-void update(std::deque<std::shared_ptr<Entity>> &entities, int width, int height)
+void update(std::deque<std::shared_ptr<Entity>> &entities, int width, int height, int &points)
 {
     for (auto ent = entities.begin(); ent != entities.end(); ent++)
     {
@@ -66,6 +66,7 @@ void update(std::deque<std::shared_ptr<Entity>> &entities, int width, int height
 
         if (pos.x < -200 || pos.x > width + 200 || pos.y < -200 || pos.y > height + 200)
         {
+            points -= static_cast<Target*>(ent->get())->getPoints();
             entities.erase(ent);
         }
         else
@@ -124,7 +125,7 @@ int main()
                         {
                             if (static_cast<Target*>(iter->get())->getAimed())
                             {
-                                points+=static_cast<Target*>(iter->get())->getPoints();
+                                points += static_cast<Target*>(iter->get())->getPoints();
                                 entities.erase(iter);
                             }
                         }
@@ -134,7 +135,7 @@ int main()
         }
 
         addTarget(entities, width, height);
-        update(entities, width, height);
+        update(entities, width, height, points);
 
         // std::cout << entities.size() << std::endl;
         // std::cout << points << std::endl;
@@ -143,9 +144,6 @@ int main()
 
         for (auto ent: entities)
             window.draw(*ent);
-
-        // for (auto ent = entities.rbegin(); ent != entities.rend(); ent++)
-        //     window.draw(*(*ent));
         window.display();
     }
 
