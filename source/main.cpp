@@ -111,7 +111,8 @@ int main()
                                 // std::cout << ch->getBulletsLeft() << std::endl;
                                 ch->setShootedTime(time(NULL));
                             }
-                        for (auto iter = entities.begin(); iter != entities.end()-1; iter++)
+                        auto iter_end = entities.end() - 1;
+                        for (auto iter = entities.begin(); iter != iter_end; iter++)
                         {
                             if (static_cast<Target*>(iter->get())->getAimed())
                             {
