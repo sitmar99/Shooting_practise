@@ -15,36 +15,46 @@
 
 void addTarget(std::deque<std::shared_ptr<Entity>> &entities, int width, int height)
 {
-    int rnd = rand()%1000 + 1;
+    int rnd = rand()%300 + 1;
     if (rnd < 9)
     {
         int posX, posY;
+        sf::Vector2f direction;
+        double help = (rand() % 100) / 100.0;
 
-        // switch (rnd)
-        // {
-        // case 1:
-        // case 5:
-        //     posX = -100;
-        //     posY = height / (rand() % 100);
-        //     break;
-        // case 2:
-        // case 6:
-        //     posX = height + 100;
-        //     posY = height / (rand() % 100);
-        //     break;
-        // case 3:
-        // case 7:
-        //     posY = -100;
-        //     posX = width / (rand() % 100);
-        //     break;
-        // case 4:
-        // case 8:
-        //     posY = width + 100;
-        //     posX = width / (rand() % 100);
-        //     break;
-        // }
+        switch (rnd)
+        {
+        case 1:
+        case 2:
+            posX = -100;
+            posY = height * help;
+            help = posY - height/2;         //zmienna pomocnicza do losowania kierunku celu
+            direction = sf::Vector2f(rand() % 180, (rand() % 90) * (-help / abs(help)));
+            break;
+        case 3:
+        case 4:
+            posX = width + 100;
+            posY = height * help;
+            help = posY - height/2;
+            direction = sf::Vector2f(-rand() % 180, (rand() % 90) * (-help / abs(help)));
+            break;
+        case 5:
+        case 6:
+            posY = -100;
+            posX = width * help;
+            help = posY - width/2;
+            direction = sf::Vector2f((rand() % 90) * (-help / abs(help)), rand() % 180);
+            break;
+        case 7:
+        case 8:
+            posY = height + 100;
+            posX = width * help;
+            help = posY - width/2;
+            direction = sf::Vector2f((rand() % 90) * (-help / abs(help)), -rand() % 180);
+            break;
+        }
 
-        entities.push_front(std::make_shared<Target>(sf::Vector2f(width/2, height/2),"sprites/target.jpeg", 200.0, 800));
+        entities.push_front(std::make_shared<Target>(direction, sf::Vector2f(posX, posY),"sprites/target.jpeg", 200.0, 800));
     }
 }
 
@@ -76,8 +86,6 @@ int main()
     sf::RenderWindow window(sf::VideoMode(), "!shooting practice!", sf::Style::Fullscreen);
     window.setMouseCursorVisible(false);
     window.setFramerateLimit(60);
-
-    std::cout << "flaming" << std::endl;
 
     while (window.isOpen())
     {

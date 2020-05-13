@@ -11,12 +11,12 @@ void Target::update()
         
 }
 
-Target::Target(sf::Vector2f pos, std::string spritePath, double nSize, int oSize) : Entity(pos, spritePath, nSize, oSize)
+Target::Target(sf::Vector2f direction, sf::Vector2f pos, std::string spritePath, double nSize, int oSize) : Entity(pos, spritePath, nSize, oSize)
 {
     this->getSprite()->setOrigin(oSize/2, oSize/2);
 
     srand(time(NULL));
-    this->direction = sf::Vector2f(rand()%360 - 180, rand()%360 - 180);
+    this->direction = direction;
     this->speed = rand()%3 + 1;
     this->points = 10 * speed;
     this->speed *= 0.01;
