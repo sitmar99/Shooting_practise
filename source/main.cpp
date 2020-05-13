@@ -77,6 +77,8 @@ int main()
     window.setMouseCursorVisible(false);
     window.setFramerateLimit(60);
 
+    std::cout << "flaming" << std::endl;
+
     while (window.isOpen())
     {
         sf::Event event;
