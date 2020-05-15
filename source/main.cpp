@@ -13,6 +13,8 @@
 #include "crosshair.h"
 #include "target.h"
 
+//git test
+
 void addTarget(std::deque<std::shared_ptr<Entity>> &entities, int width, int height)
 {
     int rnd = rand()%300 + 1;
