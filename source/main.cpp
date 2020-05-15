@@ -16,6 +16,7 @@
 void addTarget(std::deque<std::shared_ptr<Entity>> &entities, int width, int height)
 {
     int rnd = rand()%500 + 1;
+    std::cout << rnd << std:: endl;
     if (rnd < 9)
     {
         int posX, posY;
