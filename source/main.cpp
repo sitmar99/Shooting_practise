@@ -15,7 +15,7 @@
 
 void addTarget(std::deque<std::shared_ptr<Entity>> &entities, int width, int height)
 {
-    int rnd = rand()%300 + 1;
+    int rnd = rand()%200 + 1;
     if (rnd < 9)
     {
         int posX, posY;
@@ -88,9 +88,10 @@ int main()
     font.loadFromFile("sprites&fonts/western.ttf");
     sf::Text text;
     text.setFont(font);
-    text.setString("flaming");
+    text.setString("Points: 0");
     text.setCharacterSize(100);
     text.setFillColor(sf::Color::Black);
+    text.setPosition(sf::Vector2f(10,height-110));
 
     sf::RenderWindow window(sf::VideoMode(), "!shooting practice!", sf::Style::Fullscreen);
     window.setMouseCursorVisible(false);
@@ -151,6 +152,7 @@ int main()
 
         for (auto ent: entities)
             window.draw(*ent);
+        text.setString("Points: " + std::to_string(points));
         window.draw(text);
         window.display();
     }
