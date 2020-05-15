@@ -20,6 +20,8 @@ Target::Target(sf::Vector2f direction, sf::Vector2f pos, std::string spritePath,
     this->speed = rand()%3 + 1;
     this->points = 10 * speed;
     this->speed *= 0.01;
+
+    this->shooted = false;
 }
 
 Target::~Target() {}

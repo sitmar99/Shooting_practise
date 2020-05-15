@@ -67,10 +67,10 @@ void update(std::deque<std::shared_ptr<Entity>> &entities, int width, int height
         if (pos.x < -200 || pos.x > width + 200 || pos.y < -200 || pos.y > height + 200)
         {
             points -= static_cast<Target*>(ent->get())->getPoints();
-            entities.erase(ent);
+            entities.erase(ent--);
         }
         else
-            (*ent) -> update();
+            (ent->get()) -> update();
     }
 }
 
@@ -119,16 +119,16 @@ int main()
                                 // ch->decBulletsLeft();
                                 // std::cout << ch->getBulletsLeft() << std::endl;
                                 ch->setShootedTime(time(NULL));
-                            }
-                        auto iter_end = entities.end() - 1;
-                        for (auto iter = entities.begin(); iter != iter_end; iter++)
-                        {
-                            if (static_cast<Target*>(iter->get())->getAimed())
+                            for (auto iter = entities.begin(); iter != entities.end(); iter++)
                             {
-                                points += static_cast<Target*>(iter->get())->getPoints();
-                                entities.erase(iter);
+                                if (static_cast<Target*>(iter->get())->getAimed())
+                                {
+                                    points += static_cast<Target*>(iter->get())->getPoints();
+                                    static_cast<Target*>(iter->get())->setShooted(true);
+                                    entities.erase(iter);
+                                }
                             }
-                        }
+                            }
                     }
                     break;
             }
