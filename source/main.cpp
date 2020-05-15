@@ -54,7 +54,7 @@ void addTarget(std::deque<std::shared_ptr<Entity>> &entities, int width, int hei
             break;
         }
 
-        entities.push_front(std::make_shared<Target>(direction, sf::Vector2f(posX, posY),"sprites/target.jpeg", 200.0, 800));
+        entities.push_front(std::make_shared<Target>(direction, sf::Vector2f(posX, posY),"sprites&fonts/target.jpeg", 200.0, 800));
     }
 }
 
@@ -82,7 +82,15 @@ int main()
     int height = sf::VideoMode::getDesktopMode().height;
 
     std::deque<std::shared_ptr<Entity>> entities;
-    entities.push_back(std::make_shared<Crosshair>("sprites/crosshair.png", 50.0, 512));
+    entities.push_back(std::make_shared<Crosshair>("sprites&fonts/crosshair.png", 50.0, 512));
+
+    sf::Font font;
+    font.loadFromFile("sprites&fonts/western.ttf");
+    sf::Text text;
+    text.setFont(font);
+    text.setString("flaming");
+    text.setCharacterSize(100);
+    text.setFillColor(sf::Color::Black);
 
     sf::RenderWindow window(sf::VideoMode(), "!shooting practice!", sf::Style::Fullscreen);
     window.setMouseCursorVisible(false);
@@ -143,6 +151,7 @@ int main()
 
         for (auto ent: entities)
             window.draw(*ent);
+        window.draw(text);
         window.display();
     }
 
