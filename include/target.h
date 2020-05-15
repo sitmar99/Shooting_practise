@@ -12,13 +12,9 @@ private:
     sf::Vector2f direction;
     float speed;
 
-    bool shooted;
-
 public:
     int getPoints() { return this->points; }
     bool getAimed() { return this->aimed; }
-    bool getShooted() { return this->shooted; }
-    bool setShooted(bool nShooted) { return shooted = nShooted; }
 
     void update();
 
