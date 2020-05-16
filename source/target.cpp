@@ -17,6 +17,7 @@ Target::Target(sf::Vector2f direction, sf::Vector2f pos, std::string spritePath,
 
     this->direction = direction;
     this->speed = rand()%3 + 1;
+    this->getSprite()->scale(1.0/speed, 1.0/speed);
     this->points = 10 * speed;
     this->speed *= 0.01;
 }
