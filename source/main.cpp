@@ -16,7 +16,6 @@
 void addTarget(std::deque<std::shared_ptr<Entity>> &entities, int width, int height)
 {
     int rnd = rand()%500 + 1;
-    std::cout << rnd << std:: endl;
     if (rnd < 9)
     {
         int posX, posY;
@@ -30,28 +29,28 @@ void addTarget(std::deque<std::shared_ptr<Entity>> &entities, int width, int hei
             posX = -100;
             posY = height * help;
             help = posY - height/2;         //zmienna pomocnicza do losowania kierunku celu
-            direction = sf::Vector2f(rand() % 180, (rand() % 90) * (-help / abs(help)));
+            direction = sf::Vector2f(rand() % 180, (rand() % 45) * (-help / abs(help)));
             break;
         case 3:
         case 4:
             posX = width + 100;
             posY = height * help;
             help = posY - height/2;
-            direction = sf::Vector2f(-rand() % 180, (rand() % 90) * (-help / abs(help)));
+            direction = sf::Vector2f(-rand() % 180, (rand() % 45) * (-help / abs(help)));
             break;
         case 5:
         case 6:
             posY = -100;
             posX = width * help;
             help = posY - width/2;
-            direction = sf::Vector2f((rand() % 90) * (-help / abs(help)), rand() % 180);
+            direction = sf::Vector2f((rand() % 45) * (-help / abs(help)), rand() % 180);
             break;
         case 7:
         case 8:
             posY = height + 100;
             posX = width * help;
             help = posY - width/2;
-            direction = sf::Vector2f((rand() % 90) * (-help / abs(help)), -rand() % 180);
+            direction = sf::Vector2f((rand() % 45) * (-help / abs(help)), -rand() % 180);
             break;
         }
 
@@ -65,7 +64,7 @@ void update(std::deque<std::shared_ptr<Entity>> &entities, int width, int height
     {
         sf::Vector2f pos = (*ent)->getSprite()->getPosition();
 
-        if (pos.x < -200 || pos.x > width + 200 || pos.y < -200 || pos.y > height + 200)
+        if (pos.x < -100 || pos.x > width + 100 || pos.y < -100 || pos.y > height + 100)
         {
             points -= static_cast<Target*>(ent->get())->getPoints();
             entities.erase(ent--);
@@ -92,7 +91,6 @@ int main()
     text.setString("Points: 0");
     text.setCharacterSize(80);
     text.setFillColor(sf::Color::Black);
-    text.setPosition(sf::Vector2f(10,height-90));
 
     sf::RenderWindow window(sf::VideoMode(), "!shooting practice!", sf::Style::Fullscreen);
     window.setMouseCursorVisible(false);
@@ -152,6 +150,10 @@ int main()
             window.draw(*ent);
         
         text.setString("Points: " + std::to_string(points));
+        text.setPosition(sf::Vector2f(10,height-90));
+        window.draw(text);
+        text.setString(std::to_string(static_cast<Crosshair*>(entities.back().get())->getBulletsLeft()));
+        text.setPosition(sf::Vector2f(width - 50,height - 90));
         window.draw(text);
         
         window.display();
