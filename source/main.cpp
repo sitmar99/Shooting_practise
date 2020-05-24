@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 
 #include <vector>
@@ -81,9 +82,12 @@ int main()
     int width = sf::VideoMode::getDesktopMode().width;
     int height = sf::VideoMode::getDesktopMode().height;
 
+    //Lista entities oraz dodanie celownika
     std::deque<std::shared_ptr<Entity>> entities;
     entities.push_back(std::make_shared<Crosshair>("sprites&fonts/crosshair.png", 50.0, 512));
 
+
+    //Czcionki i tekst
     sf::Font font;
     font.loadFromFile("sprites&fonts/western.ttf");
     sf::Text text;
@@ -92,6 +96,14 @@ int main()
     text.setCharacterSize(80);
     text.setFillColor(sf::Color::Black);
 
+    //Dzwieki
+    sf::SoundBuffer buffer;
+    buffer.loadFromFile("sprites&fonts/gun_sound_shoot.wav");
+    sf::Sound gunShoot;
+    gunShoot.setBuffer(buffer);
+
+
+    //Okno
     sf::RenderWindow window(sf::VideoMode(), "!shooting practice!", sf::Style::Fullscreen);
     window.setMouseCursorVisible(false);
     window.setFramerateLimit(60);
@@ -126,15 +138,16 @@ int main()
                             {
                                 // ch->decBulletsLeft();
                                 // std::cout << ch->getBulletsLeft() << std::endl;
+                                gunShoot.play();
                                 ch->setShootedTime(time(NULL));
-                            for (auto iter = entities.begin(); iter != entities.end(); iter++)
-                            {
-                                if (static_cast<Target*>(iter->get())->getAimed())
+                                for (auto iter = entities.begin(); iter != entities.end(); iter++)
                                 {
-                                    points += static_cast<Target*>(iter->get())->getPoints();
-                                    entities.erase(iter);
+                                    if (static_cast<Target*>(iter->get())->getAimed())
+                                    {
+                                        points += static_cast<Target*>(iter->get())->getPoints();
+                                        entities.erase(iter);
+                                    }
                                 }
-                            }
                             }
                     }
                     break;
