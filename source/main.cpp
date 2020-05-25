@@ -75,6 +75,18 @@ void update(std::deque<std::shared_ptr<Entity>> &entities, int width, int height
     }
 }
 
+void Menu(sf::Event event)
+{
+    switch (event.type)
+    {
+    case sf::Event::KeyPressed:
+        if (event.key.code == sf::Keyboard::A)
+            menu = false;
+        break;
+    }
+
+}
+
 int main()
 {
     srand(time(NULL));
@@ -108,9 +120,32 @@ int main()
     window.setMouseCursorVisible(false);
     window.setFramerateLimit(60);
 
+    bool menu = true;
+    sf::Event event;
+
     while (window.isOpen())
     {
-        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (menu)
+                Menu(event);
+        }
+
+
+        while (menu)
+        {
+            while (window.pollEvent(event))
+            {
+                switch (event.type)
+                {
+                case sf::Event::KeyPressed:
+                    if (event.key.code == sf::Keyboard::A)
+                        menu = false;
+                    break;
+                }
+            }
+        }
+
         while (window.pollEvent(event))
         {
             switch(event.type)
