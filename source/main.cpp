@@ -75,21 +75,87 @@ void update(std::deque<std::shared_ptr<Entity>> &entities, int width, int height
     }
 }
 
-void Menu(sf::Event event)
+    bool menu = true;
+
+int Menu(sf::Event event)
 {
-    switch (event.type)
+    if (event.type == sf::Event::KeyPressed)
+    {
+        switch (event.key.code)
+        {
+        case sf::Keyboard::Space:
+            return 1;
+            break;
+        case sf::Keyboard::Escape:
+            return -1;
+            break;
+        }
+    }
+    return 0;
+}
+
+void drawMenu(sf::RenderWindow &window, sf::Text text, int height, int width)
+{
+
+}
+
+void drawPoints(sf::RenderWindow &window, sf::Text text, int height, int width, int points, std::deque<std::shared_ptr<Entity>> &entities)
+{
+    text.setString("Points: " + std::to_string(points));
+    text.setPosition(sf::Vector2f(10,height-90));
+    window.draw(text);
+    text.setString(std::to_string(static_cast<Crosshair*>(entities.back().get())->getBulletsLeft()));
+    text.setPosition(sf::Vector2f(width - 50,height - 90));
+    window.draw(text);
+
+}
+
+int Game(sf::Event event, std::deque<std::shared_ptr<Entity>> &entities, int &points, sf::Sound &gunShoot)
+{
+    switch(event.type)
     {
     case sf::Event::KeyPressed:
-        if (event.key.code == sf::Keyboard::A)
-            menu = false;
+    {
+        switch (event.key.code)
+        {
+        case sf::Keyboard::Escape:
+            points = 0;
+            return 0;
+            break;
+        case sf::Keyboard::R:
+            // static_cast<Crosshair*>(entities.back().get())->reload();
+            break;
+        }
+    }
+    case sf::Event::MouseButtonPressed:
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            Crosshair *ch = static_cast<Crosshair*>(entities.back().get());
+            if (ch->shootable())
+                {
+                    // ch->decBulletsLeft();
+                    // std::cout << ch->getBulletsLeft() << std::endl;
+                    gunShoot.play();
+                    ch->setShootedTime(time(NULL));
+                    for (auto iter = entities.begin(); iter != entities.end(); iter++)
+                    {
+                        if (static_cast<Target*>(iter->get())->getAimed())
+                        {
+                            points += static_cast<Target*>(iter->get())->getPoints();
+                            entities.erase(iter);
+                        }
+                    }
+                }
+        }
         break;
     }
-
+    return 1;
 }
 
 int main()
 {
     srand(time(NULL));
+    int option = 0;
     int points = 0;
     int width = sf::VideoMode::getDesktopMode().width;
     int height = sf::VideoMode::getDesktopMode().height;
@@ -120,72 +186,34 @@ int main()
     window.setMouseCursorVisible(false);
     window.setFramerateLimit(60);
 
-    bool menu = true;
     sf::Event event;
 
     while (window.isOpen())
     {
         while (window.pollEvent(event))
         {
-            if (menu)
-                Menu(event);
-        }
-
-
-        while (menu)
-        {
-            while (window.pollEvent(event))
+            if (event.type == sf::Event::Closed)
             {
-                switch (event.type)
-                {
-                case sf::Event::KeyPressed:
-                    if (event.key.code == sf::Keyboard::A)
-                        menu = false;
-                    break;
-                }
+                window.close();
+                break;
             }
-        }
-
-        while (window.pollEvent(event))
-        {
-            switch(event.type)
+            else
             {
-                case sf::Event::Closed:
+                switch (option)
+                {
+                case -1:
                     window.close();
                     break;
-                case sf::Event::KeyPressed:
-                {
-                    switch (event.key.code)
-                    {
-                    case sf::Keyboard::Escape:
-                        window.close();
-                        break;
-                    }
-                    case sf::Keyboard::R:
-                        // static_cast<Crosshair*>(entities.back().get())->reload();
-                        break;
-                }
-                case sf::Event::MouseButtonPressed:
-                    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-                    {
-                        Crosshair *ch = static_cast<Crosshair*>(entities.back().get());
-                        if (ch->shootable())
-                            {
-                                // ch->decBulletsLeft();
-                                // std::cout << ch->getBulletsLeft() << std::endl;
-                                gunShoot.play();
-                                ch->setShootedTime(time(NULL));
-                                for (auto iter = entities.begin(); iter != entities.end(); iter++)
-                                {
-                                    if (static_cast<Target*>(iter->get())->getAimed())
-                                    {
-                                        points += static_cast<Target*>(iter->get())->getPoints();
-                                        entities.erase(iter);
-                                    }
-                                }
-                            }
-                    }
+                case 0:
+                    option = Menu(event);
                     break;
+                case 1:
+                    option = Game(event, entities, points, gunShoot);
+                    break;
+                
+                default:
+                    break;
+                }
             }
         }
 
@@ -197,13 +225,16 @@ int main()
         for (auto ent: entities)
             window.draw(*ent);
         
-        text.setString("Points: " + std::to_string(points));
-        text.setPosition(sf::Vector2f(10,height-90));
-        window.draw(text);
-        text.setString(std::to_string(static_cast<Crosshair*>(entities.back().get())->getBulletsLeft()));
-        text.setPosition(sf::Vector2f(width - 50,height - 90));
-        window.draw(text);
-        
+        switch (option)
+        {
+        case 0:
+            drawMenu(window, text, height, width);
+            break;
+        case 1:
+            drawPoints(window, text, height, width, points, entities);
+            break;
+        }
+
         window.display();
     }
 
