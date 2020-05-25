@@ -114,6 +114,20 @@ int Game(sf::Event event, std::deque<std::shared_ptr<Entity>> &entities, int &po
     return 1;
 }
 
+int HiScore()
+{
+    std::string score;
+    std::fstream hiscore ("hiscore.txt");
+
+    getline(hiscore, score);
+    // hiscore >> score;
+    hiscore.close();
+
+    std::cout << score << std::endl;
+
+    return 0;
+}
+
 int Menu(sf::Event event, std::deque<std::shared_ptr<Entity>> &menuEntities, sf::Sound &gunShoot)
 {    
     switch (event.type)

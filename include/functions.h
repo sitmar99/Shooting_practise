@@ -12,6 +12,7 @@
 #include <thread>
 #include <pthread.h>
 #include <iostream>
+#include <fstream>
 
 #include "functions.h"
 #include "entity.h"
@@ -23,6 +24,7 @@ void addTarget(std::deque<std::shared_ptr<Entity>> &entities, int width, int hei
 void drawMenu(sf::RenderWindow &window, std::deque<std::shared_ptr<Entity>> &menuEntities);
 void drawPoints(sf::RenderWindow &window, sf::Text text, int height, int width, int points, std::deque<std::shared_ptr<Entity>> &entities);
 int Game(sf::Event event, std::deque<std::shared_ptr<Entity>> &entities, int &points, sf::Sound &gunShoot);
+int HiScore();
 int Menu(sf::Event event, std::deque<std::shared_ptr<Entity>> &menuEntities, sf::Sound &gunShoot);
 void update(std::deque<std::shared_ptr<Entity>> &entities, int width, int height, int &points);
 void updateMenu(std::deque<std::shared_ptr<Entity>> &menuEntities);
