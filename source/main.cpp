@@ -14,6 +14,7 @@
 #include "crosshair.h"
 #include "target.h"
 #include "menuOption.h"
+#include "functions.h"
 
 void addTarget(std::deque<std::shared_ptr<Entity>> &entities, int width, int height)
 {
@@ -107,6 +108,10 @@ int Menu(sf::Event event, std::deque<std::shared_ptr<Entity>> &menuEntities, sf:
                 }
             }
         }
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+        {
+            return -1;
+        }
         break;
     }
 
@@ -159,9 +164,12 @@ int Game(sf::Event event, std::deque<std::shared_ptr<Entity>> &entities, int &po
             Crosshair *ch = static_cast<Crosshair*>(entities.back().get());
             if (ch->shootable())
                 {
+                    bool hit = false;
                     // ch->decBulletsLeft();
                     // std::cout << ch->getBulletsLeft() << std::endl;
+
                     gunShoot.play();
+
                     ch->setShootedTime(time(NULL));
                     for (auto iter = entities.begin(); iter != entities.end(); iter++)
                     {
@@ -169,9 +177,17 @@ int Game(sf::Event event, std::deque<std::shared_ptr<Entity>> &entities, int &po
                         {
                             points += static_cast<Target*>(iter->get())->getPoints();
                             entities.erase(iter);
+                            hit = true;
                         }
                     }
+
+                    if (!hit)
+                        points -= 100;
                 }
+        }
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+        {
+            return 0;
         }
         break;
     }
@@ -192,7 +208,10 @@ int main()
 
     //Lista spritow menu
     std::deque<std::shared_ptr<Entity>> menuEntities;
-    menuEntities.push_back(std::make_shared<menuOption>(sf::Vector2f(10,10), "sprites&fonts/play.png", 1, sf::Vector2f(342, 214), sf::Vector2f(342, 214)));
+    menuEntities.push_back(std::make_shared<menuOption>(sf::Vector2f(width - 340, height - 240), "sprites&fonts/exit.png", -1));
+    menuEntities.push_back(std::make_shared<menuOption>(sf::Vector2f(width/2 - 276,10), "sprites&fonts/!shooting_practise!.png", 0));
+    menuEntities.push_back(std::make_shared<menuOption>(sf::Vector2f(10,150), "sprites&fonts/play.png", 1));
+    // menuEntities.push_back(std::make_shared<menuOption>(sf::Vector2f(100,100), "sprites&fonts/hi-score.png", 2));
 
     //Czcionki i tekst
     sf::Font font;
@@ -265,6 +284,7 @@ int main()
             break;
         }
 
+        window.draw(*entities.back());
 
         window.display();
     }

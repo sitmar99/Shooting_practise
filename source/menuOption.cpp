@@ -8,7 +8,7 @@ void menuOption::update()
         this->aimed = false;
 }
 
-menuOption::menuOption(sf::Vector2f pos, std::string spritePath, int id, sf::Vector2f nSize, sf::Vector2f oSize): Entity(pos, spritePath, nSize, oSize)
+menuOption::menuOption(sf::Vector2f pos, std::string spritePath, int id): Entity(pos, spritePath)
 {
     this->id = id;
 }

@@ -14,7 +14,7 @@ public:
 
     void update();
 
-    menuOption(sf::Vector2f pos, std::string spritePath, int id, sf::Vector2f nSize, sf::Vector2f oSize);
+    menuOption(sf::Vector2f pos, std::string spritePath, int id);
     ~menuOption();
 };
 
