@@ -78,10 +78,11 @@ void update(std::deque<std::shared_ptr<Entity>> &entities, int width, int height
 
     bool menu = true;
 
-int Menu(sf::Event event)
-{
-    if (event.type == sf::Event::KeyPressed)
+int Menu(sf::Event event, std::deque<std::shared_ptr<Entity>> &menuEntities, sf::Sound &gunShoot)
+{    
+    switch (event.type)
     {
+    case sf::Event::KeyPressed:
         switch (event.key.code)
         {
         case sf::Keyboard::Space:
@@ -91,7 +92,24 @@ int Menu(sf::Event event)
             return -1;
             break;
         }
+        break;
+
+    case sf::Event::MouseButtonPressed:
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            gunShoot.play();
+            for(auto ent = menuEntities.begin(); ent != menuEntities.end(); ent++)
+            {
+                auto option = static_cast<menuOption*>(ent->get());
+                if (option->getAimed())
+                {
+                    return option->getID();
+                }
+            }
+        }
+        break;
     }
+
     return 0;
 }
 
@@ -174,7 +192,7 @@ int main()
 
     //Lista spritow menu
     std::deque<std::shared_ptr<Entity>> menuEntities;
-    menuEntities.push_back(std::make_shared<menuOption>(sf::Vector2f(10,10), "sprites&fonts/play.png", sf::Vector2f(342, 214), sf::Vector2f(342, 214)));
+    menuEntities.push_back(std::make_shared<menuOption>(sf::Vector2f(10,10), "sprites&fonts/play.png", 1, sf::Vector2f(342, 214), sf::Vector2f(342, 214)));
 
     //Czcionki i tekst
     sf::Font font;
@@ -216,7 +234,7 @@ int main()
                     window.close();
                     break;
                 case 0:
-                    option = Menu(event);
+                    option = Menu(event, menuEntities, gunShoot);
                     break;
                 case 1:
                     option = Game(event, entities, points, gunShoot);
@@ -233,6 +251,9 @@ int main()
 
         window.clear(sf::Color::White);
         
+        for (auto ent: entities)
+            window.draw(*ent);
+
         switch (option)
         {
         case 0:
@@ -244,8 +265,6 @@ int main()
             break;
         }
 
-        for (auto ent: entities)
-            window.draw(*ent);
 
         window.display();
     }
