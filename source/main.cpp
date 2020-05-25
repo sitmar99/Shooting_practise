@@ -13,6 +13,7 @@
 #include "entity.h"
 #include "crosshair.h"
 #include "target.h"
+#include "menuOption.h"
 
 void addTarget(std::deque<std::shared_ptr<Entity>> &entities, int width, int height)
 {
@@ -94,9 +95,16 @@ int Menu(sf::Event event)
     return 0;
 }
 
-void drawMenu(sf::RenderWindow &window, sf::Text text, int height, int width)
+void updateMenu(std::deque<std::shared_ptr<Entity>> &menuEntities)
 {
+    for (auto ent : menuEntities)
+        ent->update();
+}
 
+void drawMenu(sf::RenderWindow &window, std::deque<std::shared_ptr<Entity>> &menuEntities)
+{
+    for (auto ent : menuEntities)
+        window.draw(*ent);
 }
 
 void drawPoints(sf::RenderWindow &window, sf::Text text, int height, int width, int points, std::deque<std::shared_ptr<Entity>> &entities)
@@ -164,6 +172,9 @@ int main()
     std::deque<std::shared_ptr<Entity>> entities;
     entities.push_back(std::make_shared<Crosshair>("sprites&fonts/crosshair.png", 50.0, 512));
 
+    //Lista spritow menu
+    std::deque<std::shared_ptr<Entity>> menuEntities;
+    menuEntities.push_back(std::make_shared<menuOption>(sf::Vector2f(10,10), "sprites&fonts/play.png", sf::Vector2f(342, 214), sf::Vector2f(342, 214)));
 
     //Czcionki i tekst
     sf::Font font;
@@ -221,19 +232,20 @@ int main()
         update(entities, width, height, points);
 
         window.clear(sf::Color::White);
-
-        for (auto ent: entities)
-            window.draw(*ent);
         
         switch (option)
         {
         case 0:
-            drawMenu(window, text, height, width);
+            updateMenu(menuEntities);
+            drawMenu(window, menuEntities);
             break;
         case 1:
             drawPoints(window, text, height, width, points, entities);
             break;
         }
+
+        for (auto ent: entities)
+            window.draw(*ent);
 
         window.display();
     }
