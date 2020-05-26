@@ -20,8 +20,8 @@ int main()
     std::deque<std::shared_ptr<Entity>> menuEntities;
     menuEntities.push_back(std::make_shared<menuOption>(sf::Vector2f(width - 340, height - 240), "sprites&fonts/exit.png", -1));
     menuEntities.push_back(std::make_shared<menuOption>(sf::Vector2f(width/2 - 276,10), "sprites&fonts/!shooting_practise!.png", 0));
-    menuEntities.push_back(std::make_shared<menuOption>(sf::Vector2f(10,150), "sprites&fonts/play.png", 1));
-    menuEntities.push_back(std::make_shared<menuOption>(sf::Vector2f(300,250), "sprites&fonts/hi-score.png", 2));
+    menuEntities.push_back(std::make_shared<menuOption>(sf::Vector2f(width/3,height/3), "sprites&fonts/play.png", 1));
+    menuEntities.push_back(std::make_shared<menuOption>(sf::Vector2f(10,height - 240), "sprites&fonts/hi-score.png", 2));
 
     //Czcionki i tekst
     sf::Font font;
