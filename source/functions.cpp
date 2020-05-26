@@ -45,6 +45,19 @@ void addTarget(std::deque<std::shared_ptr<Entity>> &entities, int width, int hei
     } 
 }
 
+void drawHiScore(sf::RenderWindow &window, sf::Text text, int height, int width)
+{
+    std::string score;
+
+    std::ifstream hiscore ("hiscore.txt");
+    getline(hiscore, score);
+    hiscore.close(); 
+
+    text.setString("Hi-Score: " + score);
+    text.setPosition(sf::Vector2f(width/2, height/2));
+    window.draw(text);
+}
+
 void drawMenu(sf::RenderWindow &window, std::deque<std::shared_ptr<Entity>> &menuEntities)
 {
     for (auto ent : menuEntities)
@@ -114,18 +127,12 @@ int Game(sf::Event event, std::deque<std::shared_ptr<Entity>> &entities, int &po
     return 1;
 }
 
-int HiScore()
+int HiScore(sf::Event event)
 {
-    std::string score;
-    std::fstream hiscore ("hiscore.txt");
-
-    getline(hiscore, score);
-    // hiscore >> score;
-    hiscore.close();
-
-    std::cout << score << std::endl;
-
-    return 0;
+    if (event.type == sf::Event::KeyPressed || event.type == sf::Event::MouseButtonPressed)
+        return 0;
+        
+    return 2;
 }
 
 int Menu(sf::Event event, std::deque<std::shared_ptr<Entity>> &menuEntities, sf::Sound &gunShoot)

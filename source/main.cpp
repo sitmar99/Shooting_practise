@@ -63,7 +63,7 @@ int main()
                 option = Game(event, entities, points, gunShoot);
                 break;
             case 2:
-                option = HiScore();
+                option = HiScore(event);
                 break;
             }
         }
@@ -94,6 +94,10 @@ int main()
         case 1:
             //rysowanie punktow i liczby strzalow
             drawPoints(window, text, height, width, points, entities);
+            break;
+        case 2:
+            //wypisywanie hiscor'a
+            drawHiScore(window, text, height, width);
             break;
         }
 
