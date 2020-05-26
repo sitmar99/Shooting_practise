@@ -41,7 +41,7 @@ void addTarget(std::deque<std::shared_ptr<Entity>> &entities, int width, int hei
             break;
         }
 
-        entities.push_front(std::make_shared<Target>(direction, sf::Vector2f(posX, posY),"sprites&fonts/target.jpeg", 200.0, 800));
+        entities.push_front(std::make_shared<Target>(direction, sf::Vector2f(posX, posY),"sprites&fonts/target.png", 200.0, 800));
     } 
 }
 
