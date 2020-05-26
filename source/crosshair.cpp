@@ -6,9 +6,8 @@ void Crosshair::reload()
 		reloading = true;
 		while(bulletsLeft < magazineSize)
 		{
-		std::this_thread::sleep_for(std::chrono::milliseconds(reloadTime / magazineSize));
-		bulletsLeft++;
-		std::cout << "Bullets: " << bulletsLeft << std::endl;
+			std::this_thread::sleep_for(std::chrono::milliseconds(reloadTime / magazineSize));
+			bulletsLeft++;
 		}
 		reloading = false;
 		}
