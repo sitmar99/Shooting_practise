@@ -16,6 +16,7 @@ private:
 	int magazineSize;
 	int bulletsLeft;
 	int reloadTime;		//in millis
+	bool reloading;
 	time_t shootedTime;
 	int shootDelay;		//in secs
 public:
@@ -26,7 +27,6 @@ public:
 	int getShootDelay() { return shootDelay; }
 
 	void reload();
-	void *reloading();
 	bool shootable();
 	void update();
 

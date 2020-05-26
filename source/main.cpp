@@ -44,7 +44,6 @@ int main()
     window.setMouseCursorVisible(false);
     window.setFramerateLimit(60);
 
-
     while (window.isOpen())
     {
         while (window.pollEvent(event))

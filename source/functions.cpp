@@ -87,7 +87,7 @@ int Game(sf::Event event, std::deque<std::shared_ptr<Entity>> &entities, int &po
             return 0;
             break;
         case sf::Keyboard::R:
-            // static_cast<Crosshair*>(entities.back().get())->reload();
+            static_cast<Crosshair*>(entities.back().get())->reload();
             break;
         }
     }
@@ -98,8 +98,7 @@ int Game(sf::Event event, std::deque<std::shared_ptr<Entity>> &entities, int &po
             if (ch->shootable())
                 {
                     bool hit = false;
-                    // ch->decBulletsLeft();
-                    // std::cout << ch->getBulletsLeft() << std::endl;
+                    ch->decBulletsLeft();
 
                     gunShoot.play();
 
