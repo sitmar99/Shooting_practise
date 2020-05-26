@@ -19,7 +19,7 @@ bool Crosshair::shootable()
 {
 	if (time(NULL) - shootedTime >= shootDelay && bulletsLeft > 0 && !reloading)
 		{
-			if (this->reloadingThread.joinable())
+		if (this->reloadingThread.joinable())
 			this->reloadingThread.join();
 		return true;
 		}

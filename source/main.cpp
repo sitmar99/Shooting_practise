@@ -74,7 +74,6 @@ int main()
         update(entities, width, height, points);
 
         window.clear(sf::Color::White);
-        
         //rysowanie wszystkich celow i celownika
         for (auto ent: entities)
             window.draw(*ent);
