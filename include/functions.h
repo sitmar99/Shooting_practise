@@ -11,6 +11,7 @@
 #include <time.h>
 #include <thread>
 #include <pthread.h>
+// #include <math>
 #include <iostream>
 #include <fstream>
 
@@ -29,6 +30,7 @@ int HiScore(sf::Event event);
 int Menu(sf::Event event, std::deque<std::shared_ptr<Entity>> &menuEntities, sf::Sound &gunShoot);
 void update(std::deque<std::shared_ptr<Entity>> &entities, int width, int height, int &points);
 void updateMenu(std::deque<std::shared_ptr<Entity>> &menuEntities);
+void writeHiScore(int &points);
 
 
 #endif

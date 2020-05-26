@@ -54,7 +54,7 @@ void drawHiScore(sf::RenderWindow &window, sf::Text text, int height, int width)
     hiscore.close(); 
 
     text.setString("Hi-Score: " + score);
-    text.setPosition(sf::Vector2f(width/2, height/2));
+    text.setPosition(sf::Vector2f(width/3, height/3));
     window.draw(text);
 }
 
@@ -83,7 +83,7 @@ int Game(sf::Event event, std::deque<std::shared_ptr<Entity>> &entities, int &po
         switch (event.key.code)
         {
         case sf::Keyboard::Escape:
-            points = 0;
+            writeHiScore(points);
             return 0;
             break;
         case sf::Keyboard::R:
@@ -120,6 +120,7 @@ int Game(sf::Event event, std::deque<std::shared_ptr<Entity>> &entities, int &po
         }
         if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
         {
+            writeHiScore(points);
             return 0;
         }
         break;
@@ -131,7 +132,7 @@ int HiScore(sf::Event event)
 {
     if (event.type == sf::Event::KeyPressed || event.type == sf::Event::MouseButtonPressed)
         return 0;
-        
+
     return 2;
 }
 
@@ -194,4 +195,19 @@ void updateMenu(std::deque<std::shared_ptr<Entity>> &menuEntities)
 {
     for (auto ent : menuEntities)
         ent->update();
+}
+
+void writeHiScore(int &points)
+{
+    std::string hiscore;
+    std::fstream file ("hiscore.txt");
+    getline (file, hiscore);
+    file.close();
+    remove("hiscore.txt");
+    
+    file.open("hiscore.txt", std::ios::out);
+    file << std::max(points, std::stoi(hiscore)) << std::endl;
+    file.close();
+
+    points = 0;
 }
