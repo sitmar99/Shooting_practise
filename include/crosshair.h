@@ -20,8 +20,10 @@ private:
 	time_t shootedTime;
 	int shootDelay;		//in secs
 public:
+	int getMagazineSize() { return magazineSize; }
 	int getBulletsLeft() { return bulletsLeft; }
 	void decBulletsLeft() { bulletsLeft--; }
+	bool getReloading() { return reloading; }
 	void setShootedTime(time_t nShootedTime) { shootedTime = nShootedTime; }
 	time_t getShootedTime() { return shootedTime; }
 	int getShootDelay() { return shootDelay; }
