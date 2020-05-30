@@ -8,8 +8,6 @@ EXE= Game
 
 all:	$(EXE)
 	./$(EXE)
-	rm *.o
-	rm $(EXE)
 
 $(EXE):	
 	$(CC) -c $(CFLAGS) $(INCLUDE) $(SOURCE)
